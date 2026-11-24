@@ -1,0 +1,25 @@
+services:
+  #Mysql Container
+  mysql:
+    image: mysql:5.7.23
+    container_name: mysql-glpi
+    # hostname: mysql
+    ports:
+      - 3307:3306
+    volumes:
+      - ~/documents/projects/volumes/mysql_glpi:/var/lib/mysql
+    env_file:
+      - ./mysql.env
+    restart: unless-stopped
+  #GLPI Container
+  glpi:
+    image: diouxx/glpi
+    container_name: glpi
+    # hostname: glpi
+    ports:
+      - 8088:80
+    volumes:
+      - ~/documents/projects/volumes/glpi/:/var/www/html/glpi
+    environment:
+      - TIMEZONE=America/Toronto
+    restart: unless-stopped
